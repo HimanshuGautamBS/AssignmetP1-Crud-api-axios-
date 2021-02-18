@@ -22,6 +22,7 @@ export default class User extends Component {
             this.setState({ users });
           })
       }
+
       
       deleteRow(id){
         axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
@@ -30,25 +31,33 @@ export default class User extends Component {
             console.log(res.data);
 
             // Filter works similarly as if else
-            
+
             const users = this.state.users.filter(item => item.id !== id);
             this.setState({ users });
           })
+       }
       
-      }
-      
+           getData=(id)=>{
+            
+            console.log(id)
+            axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
+                console.log(res.data[id]);
+            })
+    }
+
+
       render() {
           console.log("render");
         return (
           <div>
-            <h1>React Axios Delete Request</h1>
+              <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
+            <h1>User-List </h1>
       
             <table className="table table-bordered">
                 <thead>
                   <tr>
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Email</th>
                       <th>Action</th>
                       <th>Details</th>
                   </tr>
@@ -59,19 +68,23 @@ export default class User extends Component {
                     <tr key={user.id}>
                       <td>{user.id}</td>
                       <td>{user.name}</td>
-                      <td>{user.email}</td>
+                      
                       <td>
                         <button className="btn btn-danger" onClick={() => this.deleteRow(user.id)}>Delete</button>
                       </td>
                       <td>
-                        <button className="btn btn-danger" onClick={(e) => this.deleteRow(user.id, e)}>Details</button>
+                      <NavLink to={{  pathname:'/users/<the-user-id>',  state: {name:'from home page'}  }}>User Detail</NavLink>
+                      {/* <NavLink to={"/users/<the-user-id>" , {ids:user.id}}  style={{padding:'20px'}}>Details</NavLink> */}
+                      </td>
+                      <td>
+                        <button className="btn btn-danger" onClick={(e) => this.getData(user.id-1, e)}>Details</button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
-      
-            </table>
-          </div>
+                
+            </table><table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink>
+            </table>          </div>
         )
       }
     
@@ -83,13 +96,13 @@ export default class User extends Component {
 
 
 //     // For user Detail with the help of onClick listner
-//     getData=(id)=>{
+    // getData=(id)=>{
             
-//             console.log(id)
-//             api.get('/').then(res=>{
-//                 console.log(res.data[id]);
-//             })
-//     }
+    //         console.log(id)
+    //         api.get('/').then(res=>{
+    //             console.log(res.data[id]);
+    //         })
+    // }
  
 //     // postDeleted (){
 //     //   alert("are you sure about this")
