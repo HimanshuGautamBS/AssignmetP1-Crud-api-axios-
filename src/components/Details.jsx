@@ -16,38 +16,21 @@ export default class Details extends Component {
       }
       
       componentDidMount() {
-          
+          const loc=window.location.href;
+          var resu=loc.split("/");
+          var id = resu[4];
+        console.log(loc);
+        console.log(id);
         axios.get(`https://jsonplaceholder.typicode.com/users/`)
           .then(res => {
-              console.log(res.data[0])
-            const users = res.data;
+              console.log(res.data[id])
+            const users = res.data[id-1];
             this.setState({ users });
             
           })
       }
 
       
-      deleteRow(id){
-        axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
-
-            // Filter works similarly as if else
-
-            const users = this.state.users.filter(item => item.id !== id);
-            this.setState({ users });
-          })
-       }
-      
-           getData=(id)=>{
-            
-            console.log(id)
-            axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
-                console.log(res.data[id]);
-            })
-    }
-
 
       render() {
          
@@ -55,11 +38,12 @@ export default class Details extends Component {
         return (
           <div>
               <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
-            <h1>User-List </h1>
+            <h1>User-Detail</h1>
+
       
-            <table className="table table-bordered">
-                <thead>
-                  <tr>
+            <table style={{padding:"50px"}} className="table table-bordered">
+                <thead style={{padding:"50px"}}>
+                  <tr style={{padding:"50px"}}>
                       <th>ID</th>
                       <th>Name</th>
                       <th>Email</th>
@@ -68,16 +52,17 @@ export default class Details extends Component {
                 </thead>
       
                 <tbody>
-                  {this.state.users.map((user) => (
-                    <tr key={user.id}>
-                      <td>{user.id}</td>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>  
+                  
+                    <tr key={this.state.users.id}>
+                      <td style={{padding:"20px"}}>{this.state.users.id}</td>
+                      <td style={{padding:"20px"}}>{this.state.users.name}</td>
+                      <td>{this.state.users.email}</td>  
                     </tr>
-                  ))}
+                  
                 </tbody>
                 
-            </table>        </div>
+            </table>  
+                  </div>
         )
       }
     }
