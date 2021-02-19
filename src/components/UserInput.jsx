@@ -39,9 +39,9 @@ export default class UserInput extends Component {
         }
          api.post('/',{user}).then(res=>
             {
-                if(res.status === 201){
-                    window.location.href = "/users"
-                }
+                // if(res.status === 201){
+                //     window.location.href = "/users"
+                // }
                 console.log(res)
                 console.log(res.data)
             })
@@ -50,7 +50,7 @@ export default class UserInput extends Component {
 
 
     render() {
-        console.log(this.props.name);
+        
       return (<>
       
        <NavLink exact to="/users" >USERS</NavLink> 

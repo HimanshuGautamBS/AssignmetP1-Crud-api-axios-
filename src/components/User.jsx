@@ -47,7 +47,7 @@ export default class User extends Component {
 
 
       render() {
-          console.log("render");
+        
         return (
           <div>
               <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
@@ -73,11 +73,11 @@ export default class User extends Component {
                         <button className="btn btn-danger" onClick={() => this.deleteRow(user.id)}>Delete</button>
                       </td>
                       <td>
-                      <NavLink to={{  pathname:'/users/<the-user-id>',  state: {name:'from home page'}  }}>User Detail</NavLink>
+                      <NavLink to={{  pathname:`/users/${user.id}`  }}>User Detail</NavLink>
                       {/* <NavLink to={"/users/<the-user-id>" , {ids:user.id}}  style={{padding:'20px'}}>Details</NavLink> */}
                       </td>
                       <td>
-                        <button className="btn btn-danger" onClick={(e) => this.getData(user.id-1, e)}>Details</button>
+                        <button className="btn btn-danger"  onClick={(e) => this.getData(user.id-1, e)}>Details</button>
                       </td>
                     </tr>
                   ))}
