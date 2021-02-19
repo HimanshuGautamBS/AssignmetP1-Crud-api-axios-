@@ -26,11 +26,13 @@ export default class UserInput extends Component {
           email:this.state.email, 
         }
        api.post('/',{user}).then(res=>
-            {  // if(res.status === 201){
-               //     window.location.href = "/users"
-               // }
+            { 
+            //      if(res.status === 201){
+            //        window.location.href = "/users"
+            //    }
                console.log(res)
                console.log(res.data)
+               this.props.history.push(`/users/`);
             })
     };
 

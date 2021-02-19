@@ -39,7 +39,6 @@ export default class User extends Component {
           <div>
             <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
             <h1 style={{margin:"50px"}}>User-List </h1>
-      
             <table style={{margin:"50px"}} className="table table-bordered">
               <thead>
                 <tr >
@@ -56,7 +55,7 @@ export default class User extends Component {
                     <td>{user.name}</td>
                     <td> <button className="btn btn-danger" onClick={() => this.deleteRow(user.id)}>Delete </button> </td>
                     <td> <NavLink to={{  pathname:`/users/${user.id}`  }}>User Detail</NavLink> </td>
-     <button onClick={()=>this.editUser(user.id)}> Edit </button>
+                <button onClick={()=>this.editUser(user.id)}> Edit </button>
                   </tr>
                   ))}
               </tbody>

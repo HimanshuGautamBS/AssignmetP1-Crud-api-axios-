@@ -12,10 +12,24 @@ export default class UserInput extends Component {
     state = {users:[]}; 
     
 
+    componentDidMount() {
+        const loc=window.location.href;
+        var resu=loc.split("/");
+        var id = resu[4];
+        console.log(loc);
+        console.log(id);
+        axios.get(`https://jsonplaceholder.typicode.com/users/`)
+        .then(res => {
+          console.log(res.data[id])
+          const users = res.data[id-1];
+          this.setState({ users });
+          })
+        }
+
     handleChange = event =>{ this.setState( { [event.target.name] :event.target.value, }, ) }
     
     handleSubmit= event =>{
-      const loc=window.location.href;
+      const loc=window.location.href;  // cathing id of user using url
       var resu=loc.split("/");
       var id = resu[4];
       event.preventDefault();   
@@ -26,7 +40,11 @@ export default class UserInput extends Component {
           }
         api.put(`https://jsonplaceholder.typicode.com/users/${id}`,{user}).then(res=>
           {
+              const users=res.data;
+              this.setState({ users })
+            this.props.history.push(`/users/`);
             console.log(res)
+            
             console.log(res.data)
           })};
 
@@ -35,13 +53,13 @@ export default class UserInput extends Component {
         <NavLink exact to="/users" >USERS</NavLink> 
           <form onSubmit={this.handleSubmit} style={{boxSizing :"border-box"}}> 
             <label>Name:
-              <input type="text" name="name" onChange={this.handleChange}/>
+              <input type="text" name="name" value={this.state.users.name} onChange={this.handleChange}/>
             </label>
             <label>UserName:
-              <input type="text" name="username" onChange={this.handleChange}/>
+              <input type="text" name="username" value={this.state.users.username} onChange={this.handleChange}/>
             </label><br/>
             <label>Email:
-              <input type="text" name="email" onChange={this.handleChange}/>
+              <input type="text" name="email" value={this.state.users.email} onChange={this.handleChange}/>
             </label>
             <button type="submit">Add</button>
         </form> 
