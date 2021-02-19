@@ -1,90 +1,67 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
-import UserInput from './UserInput';
-
-// const api = axios.create({
-//     baseURL: `https://jsonplaceholder.typicode.com/users`
-// })
 
 export default class User extends Component {
-
-
-    state = {
-        users: []
-      }
+  state = { users:[] }; 
       
-      componentDidMount() {
-          
-        axios.get(`https://jsonplaceholder.typicode.com/users`)
-          .then(res => {
-            const users = res.data;
-            this.setState({ users });
-          })
-      }
+  componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/users`)
+      .then(res => {
+        const users = res.data;
+        this.setState({ users }); })}
+
+  deleteRow(id){
+    axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+    .then(res => {
+      console.log(res);
+        console.log(res.data);
+        // Filter works similarly as if else
+        const users = this.state.users.filter(item => item.id !== id);
+        this.setState({ users });})}
 
       
-      deleteRow(id){
-        axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
+  getData=(id)=>{
+    console.log(id)
+    axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
+      console.log(res.data[id]);
+      } )
+   }
 
-            // Filter works similarly as if else
 
-            const users = this.state.users.filter(item => item.id !== id);
-            this.setState({ users });
-          })
-       }
-      
-           getData=(id)=>{
-            
-            console.log(id)
-            axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
-                console.log(res.data[id]);
-            })
-    }
-
+  editUser=(id)=>{
+    this.props.history.push(`/users/${id}/edit`);
+    console.log(id);
+  }
 
       render() {
-        
         return (
           <div>
-              <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
-            <h1>User-List </h1>
+            <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
+            <h1 style={{margin:"50px"}}>User-List </h1>
       
-            <table className="table table-bordered">
-                <thead>
-                  <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Action</th>
-                      <th>Details</th>
+            <table style={{margin:"50px"}} className="table table-bordered">
+              <thead>
+                <tr >
+                  <th style={{margin:"50px"}}>ID</th>
+                  <th>Name</th>
+                  <th>Action</th>
+                  <th >Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td> <button className="btn btn-danger" onClick={() => this.deleteRow(user.id)}>Delete </button> </td>
+                    <td> <NavLink to={{  pathname:`/users/${user.id}`  }}>User Detail</NavLink> </td>
+     <button onClick={()=>this.editUser(user.id)}> Edit </button>
                   </tr>
-                </thead>
-      
-                <tbody>
-                  {this.state.users.map((user) => (
-                    <tr key={user.id}>
-                      <td>{user.id}</td>
-                      <td>{user.name}</td>
-                      
-                      <td>
-                        <button className="btn btn-danger" onClick={() => this.deleteRow(user.id)}>Delete</button>
-                      </td>
-                      <td>
-                      <NavLink to={{  pathname:`/users/${user.id}`  }}>User Detail</NavLink>
-                      {/* <NavLink to={"/users/<the-user-id>" , {ids:user.id}}  style={{padding:'20px'}}>Details</NavLink> */}
-                      </td>
-                      <td>
-                        <button className="btn btn-danger"  onClick={(e) => this.getData(user.id-1, e)}>Details</button>
-                      </td>
-                    </tr>
                   ))}
-                </tbody>
-                
-            </table><table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink>
-            </table>          </div>
+              </tbody>
+             </table><table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
+          </div>
         )
       }
     
