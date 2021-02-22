@@ -21,16 +21,15 @@ export default class UserInput extends Component {
         // stoping the browser from reloding the page
       const user =
         {
-          name:this.state.name,
-          username:this.state.username,
-          email:this.state.email, 
+          name:'',
+          username:'',
+          email:''
         }
        api.post('/',{user}).then(res=>
             { 
             //      if(res.status === 201){
             //        window.location.href = "/users"
             //    }
-               console.log(res)
                console.log(res.data)
                this.props.history.push(`/users/`);
             })

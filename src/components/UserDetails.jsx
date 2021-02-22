@@ -14,11 +14,9 @@ export default class Details extends Component {
       const loc=window.location.href;
       var resu=loc.split("/");
       var id = resu[4];
-      console.log(loc);
-      console.log(id);
+  
       axios.get(`https://jsonplaceholder.typicode.com/users/`)
       .then(res => {
-        console.log(res.data[id])
         const users = res.data[id-1];
         this.setState({ users });
         })
