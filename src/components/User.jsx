@@ -2,16 +2,19 @@ import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
 import SearchBar from './SearchBar';
+import ReactPaginate from 'react-paginate';
 // import SearchBar from './SearchBar';
 
 export default class User extends Component {
   
-  state = { users:[] , searchTerm:'',sortType:''}; 
+  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5}; 
       
   componentDidMount() {
     axios.get(`https://jsonplaceholder.typicode.com/users`)
       .then(res => {
-        const users = res.data;
+        
+        const users = res.data.slice(this.currentPage,this.postPerpage);
+        
         this.setState({ users }); })}
 
   deleteRow(id){
@@ -33,11 +36,22 @@ export default class User extends Component {
   editUser=(id)=>{
     this.props.history.push(`/users/${id}/edit`);
   }
-onSort=(type)=>{
+
+  onSort=(type)=>{
   this.setState({sortType:type});
+ }
+
+ Back=()=>{
+  this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2})
 }
 
+  Next=()=>{
+    this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2})
+  }
+
       render() {
+
+
         let sortedUsers;
         if (this.state.sortType === "asc") {
          
@@ -51,7 +65,7 @@ onSort=(type)=>{
         }
         let filteredUsers =sortedUsers;
         // filter for searchBar
-         filteredUsers=this.state.users.filter((user)=>{
+         filteredUsers=this.state.users.slice(this.state.currentPage,this.state.postPerpage).filter((user)=>{
           return user.name.toLowerCase().includes(this.state.searchTerm.toLocaleLowerCase())
         })
         return (
@@ -83,10 +97,14 @@ onSort=(type)=>{
                     <td> <NavLink to={{  pathname:`/users/${user.id}`  }}>User Detail</NavLink> </td>
                 <button onClick={()=>this.editUser(user.id)}> Edit </button>
                   </tr>
-                  ))}
-                 
-              </tbody>
-             </table><table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
+                  ))} </tbody>
+             
+             </table>
+             <div style={{margin:"30px"}}>
+                 <button onClick={()=>this.Next()}>Next..</button>
+                 <button style={{margin:"30px"}} onClick={()=>this.Back()}>..Back</button>
+                 </div>
+             <table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
           </div>
         )
       }
