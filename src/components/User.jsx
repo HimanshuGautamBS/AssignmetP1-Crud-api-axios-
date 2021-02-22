@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
+import SearchBar from './SearchBar';
+// import SearchBar from './SearchBar';
 
 export default class User extends Component {
-  state = { users:[] }; 
+  state = { users:[] , searchTerm:''}; 
       
   componentDidMount() {
     axios.get(`https://jsonplaceholder.typicode.com/users`)
@@ -14,11 +16,9 @@ export default class User extends Component {
   deleteRow(id){
     axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
     .then(res => {
-      console.log(res);
-        console.log(res.data);
-        // Filter works similarly as if else
-        const users = this.state.users.filter(item => item.id !== id);
-        this.setState({ users });})}
+      // Filter works similarly as if else
+      const users = this.state.users.filter(item => item.id !== id);
+      this.setState({ users });})}
 
       
   getData=(id)=>{
@@ -34,10 +34,27 @@ export default class User extends Component {
     console.log(id);
   }
 
+  editSearchTerm=(e)=>{
+    this.setState({searchTerm:e.target.value})
+  }
+
+  // dynamicSearch =()=>{
+  //     return this.state.name.filter(name=>name.toLowerCase().includes(this.state.searchTerm.toLo))
+  // }
+  
       render() {
+        
+        let filterUser=this.state.users.filter((user)=>{
+          return user.name.toLowerCase().includes(this.state.searchTerm.toLocaleLowerCase())
+        })
         return (
+          
+
           <div>
             <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
+            <div>
+            <SearchBar handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
+            </div>
             <h1 style={{margin:"50px"}}>User-List </h1>
             <table style={{margin:"50px"}} className="table table-bordered">
               <thead>
@@ -49,7 +66,7 @@ export default class User extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.users.map((user) => (
+                {filterUser.map((user) => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
@@ -58,6 +75,7 @@ export default class User extends Component {
                 <button onClick={()=>this.editUser(user.id)}> Edit </button>
                   </tr>
                   ))}
+                 
               </tbody>
              </table><table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
           </div>
