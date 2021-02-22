@@ -7,8 +7,9 @@ import ReactPaginate from 'react-paginate';
 
 export default class User extends Component {
   
-  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:1}; 
+  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:1,canNextPage:null}; 
       
+
   componentDidMount() {
     axios.get(`https://jsonplaceholder.typicode.com/users`)
       .then(res => {
@@ -47,10 +48,13 @@ export default class User extends Component {
 
   Next=()=>{
     this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2,pageNo:this.state.pageNo+1})
+    // if(this.state.pageNo===5){
+    //   this.setState(this.state.canNextPage=true)
+    // }
   }
 
       render() {
-
+    
 
         let sortedUsers;
         if (this.state.sortType === "asc") {
@@ -74,7 +78,7 @@ export default class User extends Component {
             
             <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
          
-          <button onClick={()=>this.onSort('asc')}>Sort By Asc</button>
+          <button onClick={()=>this.onSort('asc')}  >Sort By Asc</button>
           <button onClick={()=>this.onSort('desc')}>Sort By Desc</button>
           </div>
 
@@ -101,9 +105,9 @@ export default class User extends Component {
              
              </table>
              <div style={{margin:"30px"}}>
-                 <button onClick={()=>this.Next()}>Next..</button>
+                 <button onClick={()=>this.Next() } disabled={this.state.canNextPage} disabled={this.state.pageNo == 5} >Next..</button>
                  <p>Page no:{this.state.pageNo}</p>
-                 <button onClick={()=>this.Back()}>..Back</button>
+                 <button onClick={()=>this.Back()  } disabled={this.state.pageNo == 1}  >..Back</button>
                  </div>
              <table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
           </div>
