@@ -7,7 +7,7 @@ import ReactPaginate from 'react-paginate';
 
 export default class User extends Component {
   
-  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5}; 
+  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:1}; 
       
   componentDidMount() {
     axios.get(`https://jsonplaceholder.typicode.com/users`)
@@ -42,11 +42,11 @@ export default class User extends Component {
  }
 
  Back=()=>{
-  this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2})
+  this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2,pageNo:this.state.pageNo-1})
 }
 
   Next=()=>{
-    this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2})
+    this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2,pageNo:this.state.pageNo+1})
   }
 
       render() {
@@ -102,7 +102,8 @@ export default class User extends Component {
              </table>
              <div style={{margin:"30px"}}>
                  <button onClick={()=>this.Next()}>Next..</button>
-                 <button style={{margin:"30px"}} onClick={()=>this.Back()}>..Back</button>
+                 <p>Page no:{this.state.pageNo}</p>
+                 <button onClick={()=>this.Back()}>..Back</button>
                  </div>
              <table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
           </div>
