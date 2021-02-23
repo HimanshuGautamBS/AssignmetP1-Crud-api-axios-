@@ -7,7 +7,7 @@ import ReactPaginate from 'react-paginate';
 
 export default class User extends Component {
   
-  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:null}; 
+  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:1}; 
       
 
   componentDidMount() {
@@ -16,11 +16,13 @@ export default class User extends Component {
         
         const users = res.data.slice(this.currentPage,this.postPerpage);
         
-        this.setState({ users }); })}
+        this.setState({ users });
+        
+      })}
 
   deleteRow(id){
     axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-    .then(res => {
+    .then(res => { 
       // Filter works similarly as if else
       const users = this.state.users.filter(item => item.id !== id);
       this.setState({ users });})}
@@ -42,27 +44,26 @@ export default class User extends Component {
   this.setState({sortType:type});
  }
 
-//  Back=()=>{
-//   this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2,pageNo:this.state.pageNo-1})
-// }
+ Back=()=>{
+  this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2,pageNo:this.state.pageNo-1})
+}
 
-//   Next=()=>{
-//     this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2,pageNo:this.state.pageNo+1})
-//     // if(this.state.pageNo===5){
-//     //   this.setState(this.state.canNextPage=true)
-//     // }
-//   }
+  Next=()=>{
+    this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2,pageNo:this.state.pageNo+1})
+    // if(this.state.pageNo===5){
+    //   this.setState(this.state.canNextPage=true)
+    // }
+  }
   
   changePage=({selected})=>{
-    this.setState({pageNo:selected})
+    this.setState({pageNo:selected+1})
+    // this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2})
     console.log(selected+1)
     console.log(this.state.pageNo)
-    // this.setState({currentPage:this.state.pageNo,postPerpage:this.state.pageNo})
   }
-    // handleChange=()=>{
-
-    //   console.log("clicked");
-    // }
+    handleChange=()=>{
+      console.log("clicked");
+    }
 
       render() {
     
@@ -119,18 +120,18 @@ export default class User extends Component {
                      previousLabel={"Previous"}
                      nextLabel={"Next"}
                      pageCount={5}
-                    //  activePage={this.state.activePage}
+                     activePage={this.state.activePage}
                      onPageChange={this.changePage}
-                    //  onClick={this.handleChange(this.pageNo)}
+                     onClick={this.handleChange}
                      activeClassName={"pagianationActive"}
               
                 />
                 
-             {/* <div style={{margin:"30px"}}>
+             <div style={{margin:"30px"}}>
                  <button onClick={()=>this.Next() } disabled={this.state.pageNo == 5} >Next..</button>
                  <p>Page no:{this.state.pageNo}</p>
                  <button onClick={()=>this.Back()  } disabled={this.state.pageNo == 1}  >..Back</button>
-                 </div> */}
+                 </div>
 
                 
                  
