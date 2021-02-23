@@ -7,7 +7,7 @@ import ReactPaginate from 'react-paginate';
 
 export default class User extends Component {
   
-  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:1,canNextPage:null}; 
+  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:null}; 
       
 
   componentDidMount() {
@@ -42,16 +42,27 @@ export default class User extends Component {
   this.setState({sortType:type});
  }
 
- Back=()=>{
-  this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2,pageNo:this.state.pageNo-1})
-}
+//  Back=()=>{
+//   this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2,pageNo:this.state.pageNo-1})
+// }
 
-  Next=()=>{
-    this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2,pageNo:this.state.pageNo+1})
-    // if(this.state.pageNo===5){
-    //   this.setState(this.state.canNextPage=true)
-    // }
+//   Next=()=>{
+//     this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2,pageNo:this.state.pageNo+1})
+//     // if(this.state.pageNo===5){
+//     //   this.setState(this.state.canNextPage=true)
+//     // }
+//   }
+  
+  changePage=({selected})=>{
+    this.setState({pageNo:selected})
+    console.log(selected+1)
+    console.log(this.state.pageNo)
+    // this.setState({currentPage:this.state.pageNo,postPerpage:this.state.pageNo})
   }
+    // handleChange=()=>{
+
+    //   console.log("clicked");
+    // }
 
       render() {
     
@@ -104,11 +115,26 @@ export default class User extends Component {
                   ))} </tbody>
              
              </table>
-             <div style={{margin:"30px"}}>
-                 <button onClick={()=>this.Next() } disabled={this.state.canNextPage} disabled={this.state.pageNo == 5} >Next..</button>
+             <ReactPaginate
+                     previousLabel={"Previous"}
+                     nextLabel={"Next"}
+                     pageCount={5}
+                    //  activePage={this.state.activePage}
+                     onPageChange={this.changePage}
+                    //  onClick={this.handleChange(this.pageNo)}
+                     activeClassName={"pagianationActive"}
+              
+                />
+                
+             {/* <div style={{margin:"30px"}}>
+                 <button onClick={()=>this.Next() } disabled={this.state.pageNo == 5} >Next..</button>
                  <p>Page no:{this.state.pageNo}</p>
                  <button onClick={()=>this.Back()  } disabled={this.state.pageNo == 1}  >..Back</button>
-                 </div>
+                 </div> */}
+
+                
+                 
+
              <table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
           </div>
         )
