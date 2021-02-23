@@ -3,11 +3,12 @@ import {NavLink} from 'react-router-dom';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import ReactPaginate from 'react-paginate';
+import Button from '@material-ui/core/Button';
 // import SearchBar from './SearchBar';
 
 export default class User extends Component {
   
-  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:5,pageNo:1}; 
+  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:2,pageNo:1}; 
       
 
   componentDidMount() {
@@ -37,6 +38,8 @@ export default class User extends Component {
 
 
   editUser=(id)=>{
+    // this.setState({pageNo:})
+    console.log("page no"+this.state.pageNo)
     this.props.history.push(`/users/${id}/edit`);
   }
 
@@ -57,7 +60,7 @@ export default class User extends Component {
   
   changePage=({selected})=>{
     this.setState({pageNo:selected+1})
-    // this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2})
+    this.setState({currentPage:selected,postPerpage:selected+2})
     console.log(selected+1)
     console.log(this.state.pageNo)
   }
@@ -85,7 +88,9 @@ export default class User extends Component {
           return user.name.toLowerCase().includes(this.state.searchTerm.toLocaleLowerCase())
         })
         return (
+          
           <div>
+            <Button variant="contained">Hello</Button>
             <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink> 
             
             <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
@@ -109,9 +114,9 @@ export default class User extends Component {
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
-                    <td> <button className="btn btn-danger" onClick={() => this.deleteRow(user.id)}>Delete </button> </td>
+                    <td> <Button variant="outlined" color="secondary" onClick={() => this.deleteRow(user.id)}>Delete </Button> </td>
                     <td> <NavLink to={{  pathname:`/users/${user.id}`  }}>User Detail</NavLink> </td>
-                <button onClick={()=>this.editUser(user.id)}> Edit </button>
+                <Button variant="outlined" color="primary" onClick={()=>this.editUser(user.id)}> Edit </Button>
                   </tr>
                   ))} </tbody>
              
@@ -120,22 +125,25 @@ export default class User extends Component {
                      previousLabel={"Previous"}
                      nextLabel={"Next"}
                      pageCount={5}
+                    //  breakLabel={"..."}
                      activePage={this.state.activePage}
                      onPageChange={this.changePage}
                      onClick={this.handleChange}
                      activeClassName={"pagianationActive"}
+                     marginPagesDisplayed={2}
               
                 />
-                
-             <div style={{margin:"30px"}}>
-                 <button onClick={()=>this.Next() } disabled={this.state.pageNo == 5} >Next..</button>
-                 <p>Page no:{this.state.pageNo}</p>
-                 <button onClick={()=>this.Back()  } disabled={this.state.pageNo == 1}  >..Back</button>
-                 </div>
-
-                
                  
 
+             <div style={{margin:"30px"}}>
+                 <Button color="primary" onClick={()=>this.Next() } disabled={true} >Next..</Button>
+                 <p>Page no:{this.state.pageNo}</p>
+                 <Button color="secondary" onClick={()=>this.Back()  } disabled={true}>..Back</Button>
+                 </div>
+
+                 {/* {this.state.pageNo === 5} */}
+                 
+                 {/* {this.state.pageNo === 1}   */}
              <table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
           </div>
         )
