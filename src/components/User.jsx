@@ -61,8 +61,6 @@ export default class User extends Component {
   changePage=({selected})=>{
     this.setState({pageNo:selected+1})
     this.setState({currentPage:selected,postPerpage:selected+2})
-    console.log(selected+1)
-    console.log(this.state.pageNo)
   }
     handleChange=()=>{
       console.log("clicked");
@@ -90,7 +88,7 @@ export default class User extends Component {
         return (
           
           <div>
-            <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink> 
+            <NavLink to="/" style={{padding:'20px'}}>Logout</NavLink> 
             
             <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
          

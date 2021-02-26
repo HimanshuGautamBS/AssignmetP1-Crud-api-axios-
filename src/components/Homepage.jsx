@@ -43,8 +43,6 @@ export default class Homepage extends Component {
       if(this.valid())
       {
         this.props.history.push(`/users/`);
-        
-        alert(this.name)
       }
     }
 

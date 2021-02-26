@@ -25,7 +25,7 @@ export default class Details extends Component {
    render() {
      return (
        <div>
-         <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink>
+         <NavLink to="/users" style={{padding:'20px'}}>User-Page</NavLink>
          <h1>User-Detail</h1>
          <table style={{padding:"50px"}} className="table table-bordered">
            <thead style={{padding:"50px"}}>
