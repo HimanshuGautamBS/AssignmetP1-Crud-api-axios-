@@ -9,7 +9,7 @@ export default class Homepage extends Component {
   {
     super();
     this.state=
-    { intialname:"himanshu",
+    {
       email:"",
       password:"",
       nameError:"",
@@ -21,15 +21,15 @@ export default class Homepage extends Component {
   {
     if(this.state.email!==global.name && this.state.password!==global.userPassword)
     {
-      this.setState({nameError:"Invalid Email",passwordError: "Password lenth should be more than 5"})
+      this.setState({nameError:"Invalid Email",passwordError: "Invalid Password"})
     }
     else if(this.state.email!==global.name)
     {
-     this.setState({nameError:"Invalid Email"})
+     this.setState({nameError:"Invalid Email",passwordError:""})
     }
     else if(this.state.password!==global.userPassword)
     {
-      this.setState({passwordError:"Password length should be grater than 5"}) 
+      this.setState({passwordError:"Invalid Password",nameError:""}) 
     }
     else
     {
@@ -49,19 +49,19 @@ export default class Homepage extends Component {
     }
 
   render() 
-{ 
+{ console.log(window.user)
     return (
     
       <div style={{padding:"50px"}}>
-   <h1> ({global.name})   </h1>    
-      <label>Email</label><br/>
+      <h1>Sign In</h1>   
+      <label>Username</label><br/>
       <input type="text" onChange={(event)=>{this.setState({email:event.target.value})}}/>
       <p style={{color:"red" ,fontSize:"14px"}}>{this.state.nameError}</p>
 
       <label>Password</label><br/>
       <input type="password" onChange={(event)=>{this.setState({password:event.target.value})}}/>
       <p style={{color:"red" ,fontSize:"14px"}}>{this.state.passwordError}</p>
-      <button onClick={()=>this.submit()}>Submit</button>
+      <button onClick={()=>this.submit()}>Login</button>
                 
       </div>
         )
