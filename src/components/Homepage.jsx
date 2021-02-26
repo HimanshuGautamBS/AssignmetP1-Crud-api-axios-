@@ -47,7 +47,8 @@ export default class Homepage extends Component {
     }
 
   render() 
-{ console.log(window.user)
+  { 
+    //   console.log(window.user)
     return (
     
       <div style={{padding:"50px"}}>
