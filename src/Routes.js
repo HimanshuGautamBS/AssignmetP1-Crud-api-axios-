@@ -7,10 +7,12 @@ import EditUser from "./components/EditUser";
 // import Userdetails from './Userdetails';
 // import UserDetails from './components/UserDetails';
 import NewUser from './components/NewUser';
+import  "./GlobalVariable";
 
 function App() {
   return (
-    <>
+    <> 
+    
       <Switch>
         <Route exact path="/" component={Homepage}/>
         <Route exact path="/users" component={User}/>

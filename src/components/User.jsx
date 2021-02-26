@@ -90,7 +90,6 @@ export default class User extends Component {
         return (
           
           <div>
-            <Button variant="contained">Hello</Button>
             <NavLink to="/" style={{padding:'20px'}}>Home-Page</NavLink> 
             
             <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
