@@ -5,6 +5,7 @@ import User from './User';
 // import "public/GlobalVariable.jsx";
 export default class Homepage extends Component {
 
+  userData;
   constructor()
   {
     super();
@@ -16,6 +17,26 @@ export default class Homepage extends Component {
       passwordError:""
     }
   }
+
+  componentDidMount() {
+    this.userData = JSON.parse(localStorage.getItem('user'));
+
+    if (localStorage.getItem('user')) {
+        this.setState({
+            email: this.userData.email,
+            password: this.userData.password,
+        })
+    } else {
+        this.setState({
+            email: '',
+            password: ''
+        })
+    }
+}
+
+componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('user', JSON.stringify(nextState));
+}
 
   valid()
   {
