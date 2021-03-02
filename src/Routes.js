@@ -8,11 +8,14 @@ import EditUser from "./components/EditUser";
 // import UserDetails from './components/UserDetails';
 import NewUser from './components/NewUser';
 import  "./GlobalVariable";
+import {GlobalState} from './GlobalState'
+import {AppBar, Toolbar} from "@material-ui/core";
 
 function App() {
   return (
     <> 
-    
+<GlobalState/>
+    {/* <div style={{margin:"30px" , border:"5px solid red"}}></div> */}
       <Switch>
         <Route exact path="/" component={Homepage}/>
         <Route exact path="/users" component={User}/>

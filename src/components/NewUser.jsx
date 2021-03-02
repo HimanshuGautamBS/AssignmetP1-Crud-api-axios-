@@ -41,7 +41,7 @@ export default class UserInput extends Component {
     imageHandler = (e) => {
       const reader = new FileReader();
       reader.onload = () =>{
-        if(reader.readyState === 2){
+        if(reader.readyState === 2) {
           this.setState({profileImg: reader.result})
         }
       }
