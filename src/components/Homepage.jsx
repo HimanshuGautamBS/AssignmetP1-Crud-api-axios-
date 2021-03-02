@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {NavLink} from 'react-router-dom';
 import User from './User';
 
+const em="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
 // import "public/GlobalVariable.jsx";
 export default class Homepage extends Component {
 
@@ -40,11 +41,11 @@ componentWillUpdate(nextProps, nextState) {
 
   valid()
   {
-    if(this.state.email!==global.name && this.state.password!==global.userPassword)
+    if(!this.state.email.match(em) && this.state.password!==global.userPassword)
     {
       this.setState({nameError:"Invalid Email",passwordError: "Invalid Password"})
     }
-    else if(this.state.email!==global.name)
+    else if(!this.state.email.match(em))
     {
      this.setState({nameError:"Invalid Email",passwordError:""})
     }

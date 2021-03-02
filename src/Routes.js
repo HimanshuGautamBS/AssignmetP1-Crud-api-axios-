@@ -14,8 +14,7 @@ import {AppBar, Toolbar} from "@material-ui/core";
 function App() {
   return (
     <> 
-<GlobalState/>
-    {/* <div style={{margin:"30px" , border:"5px solid red"}}></div> */}
+      <GlobalState />
       <Switch>
         <Route exact path="/" component={Homepage}/>
         <Route exact path="/users" component={User}/>

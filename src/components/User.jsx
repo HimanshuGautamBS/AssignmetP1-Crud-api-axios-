@@ -89,8 +89,6 @@ export default class User extends Component {
           
           <div>
             
-            <NavLink to="/" style={{padding:'20px'}}>Logout</NavLink> 
-            
             <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
          
           <button onClick={()=>this.onSort('asc')}  >Sort By Asc</button>
