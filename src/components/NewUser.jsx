@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import {NavLink} from 'react-router-dom';
+import "./newUser.css";
 import axios from 'axios';
+
 
 const api = axios.create( { baseURL:`https://jsonplaceholder.typicode.com/users` } )
 
 export default class UserInput extends Component {
-  state = { users:[] }; 
+  state = { users:[] ,
+            profileImg:'https://i.stack.imgur.com/l60Hf.png'}; 
  
     // anything we type inside the text box get added to the state
     handleChange = event =>{
@@ -35,7 +38,18 @@ export default class UserInput extends Component {
             })
     };
 
+    imageHandler = (e) => {
+      const reader = new FileReader();
+      reader.onload = () =>{
+        if(reader.readyState === 2){
+          this.setState({profileImg: reader.result})
+        }
+      }
+      reader.readAsDataURL(e.target.files[0])
+    };
+
     render() {
+      const {profileImg}=this.state
       return (<>
         <NavLink exact to="/users" >USERS</NavLink> 
           <form onSubmit={this.handleSubmit} style={{boxSizing :"border-box"}}> 
@@ -50,6 +64,23 @@ export default class UserInput extends Component {
             </label>
             <button type="submit">Add</button>
           </form> 
+          <div className="page">
+            <div className="container">
+              <h1 className="heading">Add image</h1>
+              <div className="img-holder">
+                <img src={profileImg} alt="" id="img" className="img"/>
+              </div>
+              <input type="file" name="image-upload" id="input" accept="image/*" onChange={this.imageHandler}/>
+              <div className="label">
+                <label htmlFor="input" className="image-upload">
+                <i className="material-icons">add_photo_alternate</i>
+                choose your photo
+                </label>
+                  
+
+              </div>
+            </div>
+          </div>
         </>  )
       }
     }

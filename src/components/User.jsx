@@ -34,7 +34,7 @@ export default class User extends Component {
     axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
       console.log(res.data[id]);
       } )
-   }
+  }
 
 
   editUser=(id)=>{
@@ -45,11 +45,11 @@ export default class User extends Component {
 
   onSort=(type)=>{
   this.setState({sortType:type});
- }
+  }
 
- Back=()=>{
+  Back=()=>{
   this.setState({currentPage:this.state.currentPage-2,postPerpage:this.state.postPerpage-2,pageNo:this.state.pageNo-1})
-}
+  }
 
   Next=()=>{
     this.setState({currentPage:this.state.currentPage+2,postPerpage:this.state.postPerpage+2,pageNo:this.state.pageNo+1})
@@ -88,6 +88,7 @@ export default class User extends Component {
         return (
           
           <div>
+            
             <NavLink to="/" style={{padding:'20px'}}>Logout</NavLink> 
             
             <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
@@ -106,7 +107,7 @@ export default class User extends Component {
                   <th >Edit</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody>  
                 {filteredUsers.map((user) => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
