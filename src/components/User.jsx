@@ -3,6 +3,8 @@ import {NavLink ,Redirect} from 'react-router-dom';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import ReactPaginate from 'react-paginate';
+import Datepicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
 import Button from '@material-ui/core/Button';
 // import SearchBar from './SearchBar';
 
@@ -14,7 +16,7 @@ export default class User extends Component {
     let loggedin=true
     if(token==null) { loggedin=false }
 
-    this.state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:2,pageNo:1 , loggedin}; 
+    this.state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:2,pageNo:1 , loggedin ,selectedDate:null}; 
 
   }
  
@@ -99,9 +101,19 @@ export default class User extends Component {
           
           <div>
             
-            <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
-         
-          <button onClick={()=>this.onSort('asc')} >Sort By Asc</button>
+            <div style={{display:"flex"},{margin:"30px"}}>  <SearchBar handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
+            <div style={{margin:"200px 600px"},{display:"flex"}}>
+              <p>DATE:</p>
+            <Datepicker
+             selected={this.state.selectedDate}
+             onChange={(date)=>{this.setState({selectedDate:date})}}
+             dateFormat='dd/MM/yyyy'
+             isClearable
+             showYearDropdown
+             scrollableMonthYearDropdown
+             />
+            </div>
+          <button style={{display:"flex"},{margin:"30px"}} onClick={()=>this.onSort('asc')} >Sort By Asc</button>
           <button onClick={()=>this.onSort('desc')}>Sort By Desc</button>
           </div>
 
