@@ -5,7 +5,13 @@ import SearchBar from './SearchBar';
 import ReactPaginate from 'react-paginate';
 import Datepicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from '@material-ui/core';
+import "react-datepicker/dist/react-datepicker.css";
+
+
 // import SearchBar from './SearchBar';
 
 export default class User extends Component {
@@ -99,11 +105,8 @@ export default class User extends Component {
         })
         return (
           
-          <div>
-            
-            <div style={{display:"flex"},{margin:"30px"}}>  <SearchBar handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
-            <div style={{margin:"200px 600px"},{display:"flex"}}>
-              <p>DATE:</p>
+          <div style={{margin:"20px"}}><Container>
+              <label>Date:</label>
             <Datepicker
              selected={this.state.selectedDate}
              onChange={(date)=>{this.setState({selectedDate:date})}}
@@ -112,10 +115,14 @@ export default class User extends Component {
              showYearDropdown
              scrollableMonthYearDropdown
              />
-            </div>
-          <button style={{display:"flex"},{margin:"30px"}} onClick={()=>this.onSort('asc')} >Sort By Asc</button>
-          <button onClick={()=>this.onSort('desc')}>Sort By Desc</button>
+          
+                   <div style={{display:"flex"},{margin:"20px"}}>  
+                   <SearchBar handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
+     
+          <Button style={{margin:"30px"}} variant="outline-secondary" onClick={()=>this.onSort('asc')} >Sort By Asc</Button>
+          <Button variant="outline-secondary" onClick={()=>this.onSort('desc')}>Sort By Desc</Button>
           </div>
+ 
 
             <h1 style={{margin:"30px"}}>User-List </h1>
             <table style={{margin:"30px"}} className="table table-bordered">
@@ -124,6 +131,7 @@ export default class User extends Component {
                   <th style={{margin:"50px"}}>ID</th>
                   <th>Name</th>
                   <th>Action</th>
+                  <th >Details</th>
                   <th >Edit</th>
                 </tr>
               </thead>
@@ -132,14 +140,14 @@ export default class User extends Component {
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.name}</td>
-                    <td> <Button variant="outlined" color="secondary" onClick={() => this.deleteRow(user.id)}>Delete </Button> </td>
+                    <td> <Button variant="outline-danger" onClick={() => this.deleteRow(user.id)}>Delete </Button> </td>
                     <td> <NavLink to={{  pathname:`/users/${user.id}`  }}>User Detail</NavLink> </td>
-                <Button variant="outlined" color="primary" onClick={()=>this.editUser(user.id)}> Edit </Button>
+                <Button variant="outline-warning" onClick={()=>this.editUser(user.id)}> Edit </Button>
                   </tr>
                   ))} </tbody>
              
              </table>
-             <ReactPaginate
+             <ReactPaginate style={{display:"felx"}}
                      previousLabel={"Previous"}
                      nextLabel={"Next"}
                      pageCount={5}
@@ -163,7 +171,7 @@ export default class User extends Component {
                  
                  {/* {this.state.pageNo === 1}   */}
              <table style={ {padding:'20px'}}><NavLink  to="/users/new">New-user</NavLink> </table>   
-          </div>
+             </Container>   </div>
         )
       }
     
