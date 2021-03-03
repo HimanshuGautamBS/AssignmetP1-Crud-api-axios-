@@ -10,6 +10,8 @@ export default class Homepage extends Component {
   constructor()
   {
     super();
+    this.textInput=React.createRef();
+   
     this.state=
     {
       email:"",
@@ -17,6 +19,10 @@ export default class Homepage extends Component {
       nameError:"",
       passwordError:""
     }
+  }
+
+  componentDidMount=()=>{
+    this.textInput.current.focus();
   }
   
   //  **setting up local storage**
@@ -79,11 +85,11 @@ export default class Homepage extends Component {
       <div style={{padding:"50px"}}>
       <h1>Sign In</h1>   
       <label>Username</label><br/>
-      <input type="text" onChange={(event)=>{this.setState({email:event.target.value})}}/>
+      <input type="text" ref={this.textInput} onChange={(event)=>{this.setState({email:event.target.value})}}/>
       <p style={{color:"red" ,fontSize:"14px"}}>{this.state.nameError}</p>
 
       <label>Password</label><br/>
-      <input type="password" onChange={(event)=>{this.setState({password:event.target.value})}}/>
+      <input type="password"  onChange={(event)=>{this.setState({password:event.target.value})}}/>
       <p style={{color:"red" ,fontSize:"14px"}}>{this.state.passwordError}</p>
       <button onClick={()=>this.submit()}>Login</button>
                 
