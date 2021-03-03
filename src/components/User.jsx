@@ -12,9 +12,7 @@ export default class User extends Component {
     const token = localStorage.getItem("token")
     
     let loggedin=true
-    if(token==null){
-      loggedin=false
-    }
+    if(token==null) { loggedin=false }
 
     this.state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:2,pageNo:1 , loggedin}; 
 
@@ -40,9 +38,8 @@ export default class User extends Component {
 
       
   getData=(id)=>{
-    
     axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
-      console.log(res.data[id]);
+    console.log(res.data[id]);
       } )
   }
 
