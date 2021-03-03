@@ -5,7 +5,7 @@ const GlobalState=()=>{
 return  <header style={{padding:"30px"}}> 
 <AppBar> 
   <Toolbar > 
-    <NavLink to="/" style={{padding:'20px' , color:"goldenrod"}}>Logout</NavLink>  
+  <NavLink to="/loggedout" style={{padding:'20px'}}>Logout</NavLink> 
      <Typography variant="h6" component="h1" style={{marginLeft:"20px" , color:"InactiveBorder"}}>Website</Typography>
      </Toolbar></AppBar>
 </header>

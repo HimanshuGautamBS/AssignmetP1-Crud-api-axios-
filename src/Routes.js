@@ -9,6 +9,7 @@ import EditUser from "./components/EditUser";
 import NewUser from './components/NewUser';
 import  "./GlobalVariable";
 import {GlobalState} from './GlobalState'
+import LoggedOut from './components/LoggedOut';
 // import {AppBar, Toolbar} from "@material-ui/core";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/" component={Homepage}/>
         <Route exact path="/users" component={User}/>
         <Route path="/users/new" component={NewUser}/>
+        <Route path="/loggedout" component={LoggedOut}/>
         {/* Route for dynamic Url */}
         <Route exact path="/users/:id" component={UserDetails}/>
         <Route path="/users/:id/edit" component={EditUser}/>

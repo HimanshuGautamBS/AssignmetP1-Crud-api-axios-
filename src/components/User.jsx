@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {NavLink} from 'react-router-dom';
+import {NavLink ,Redirect} from 'react-router-dom';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import ReactPaginate from 'react-paginate';
@@ -7,8 +7,19 @@ import Button from '@material-ui/core/Button';
 // import SearchBar from './SearchBar';
 
 export default class User extends Component {
-  
-  state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:2,pageNo:1}; 
+  constructor(props){
+    super(props)
+    const token = localStorage.getItem("token")
+    
+    let loggedin=true
+    if(token==null){
+      loggedin=false
+    }
+
+    this.state = { users:[] , searchTerm:'',sortType:null,currentPage:0,postPerpage:2,pageNo:1 , loggedin}; 
+
+  }
+ 
       
 
   componentDidMount() {
@@ -16,7 +27,6 @@ export default class User extends Component {
       .then(res => {
         
         const users = res.data.slice(this.currentPage,this.postPerpage);
-        
         this.setState({ users });
         
       })}
@@ -67,8 +77,10 @@ export default class User extends Component {
     }
 
       render() {
-    
-
+        
+        if(this.state.loggedin===false)
+          return <Redirect to="/" />
+        
         let sortedUsers;
         if (this.state.sortType === "asc") {
          
@@ -81,6 +93,7 @@ export default class User extends Component {
           );
         }
         let filteredUsers =sortedUsers;
+      
         // filter for searchBar
          filteredUsers=this.state.users.slice(this.state.currentPage,this.state.postPerpage).filter((user)=>{
           return user.name.toLowerCase().includes(this.state.searchTerm.toLocaleLowerCase())
@@ -91,7 +104,7 @@ export default class User extends Component {
             
             <div style={{display:"flex"},{margin:"30px"}}> <SearchBar style={{margin:"20px"}} handleChange={(e)=>this.setState({searchTerm:e.target.value})}/>  
          
-          <button onClick={()=>this.onSort('asc')}  >Sort By Asc</button>
+          <button onClick={()=>this.onSort('asc')} >Sort By Asc</button>
           <button onClick={()=>this.onSort('desc')}>Sort By Desc</button>
           </div>
 

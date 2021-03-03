@@ -18,26 +18,28 @@ export default class Homepage extends Component {
       passwordError:""
     }
   }
+  
+  //  **setting up local storage**
 
-  componentDidMount() {
-    this.userData = JSON.parse(localStorage.getItem('user'));
+//   componentDidMount() {
+//     this.userData = JSON.parse(localStorage.getItem('user'));
 
-    if (localStorage.getItem('user')) {
-        this.setState({
-            email: this.userData.email,
-            password: this.userData.password,
-        })
-    } else {
-        this.setState({
-            email: '',
-            password: ''
-        })
-    }
-}
+//     if (localStorage.getItem('user')) {
+//         this.setState({
+//             email: this.userData.email,
+//             password: this.userData.password,
+//         })
+//     } else {
+//         this.setState({
+//             email: '',
+//             password: ''
+//         })
+//     }
+// }
 
-componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem('user', JSON.stringify(nextState));
-}
+// componentWillUpdate(nextProps, nextState) {
+//     localStorage.setItem('user', JSON.stringify(nextState));
+// }
 
   valid()
   {
@@ -63,7 +65,8 @@ componentWillUpdate(nextProps, nextState) {
   submit()
     {
       if(this.valid())
-      {
+      { 
+        localStorage.setItem("token","dsfnsdlkfnsdjklasad")
         this.props.history.push(`/users/`);
       }
     }
